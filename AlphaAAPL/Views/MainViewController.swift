@@ -124,18 +124,18 @@ class MainViewController: UIViewController {
     numberFormatter.numberStyle = .decimal
     numberFormatter.maximumFractionDigits = 2
     
-    let percentChange = ((stock.close - stock.prevClose) / stock.prevClose) * 100
+    let percentChange = ((stock.last - stock.prevClose) / stock.prevClose) * 100
     let formattedPercentChange = numberFormatter.string(from: NSNumber(value: percentChange)) ?? "0"
     
-    print(stock.close)
+    print(stock.last)
     
     if ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil {
-      self.priceLabel.text = "\(stock.close)"
+      self.priceLabel.text = "\(stock.last)"
     } else {
       UIView.animate(withDuration: 0.15, animations: {
         self.priceLabel.alpha = 0.0
       }) { _ in
-        self.priceLabel.text = "\(stock.close)"
+        self.priceLabel.text = "\(stock.last)"
         UIView.animate(withDuration: 0.15) {
           self.priceLabel.alpha = 1.0
         }
@@ -148,12 +148,7 @@ class MainViewController: UIViewController {
     changeLabel.textColor = percentChange >= 0 ? .systemGreen : .systemRed
     marketCapLabel.text = "Market Cap: \(stock.marketCap.formattedMarketCap)"
     
-    let now = Date()
-    if now >= stock.lastTime && now <= stock.extTime {
-      marketStatusLabel.text = "Market: Open"
-    } else {
-      marketStatusLabel.text = "Market: Closed"
-    }
+    marketStatusLabel.text = stock.info
   }
   
   private func showErrorAlert(error: Error) {
