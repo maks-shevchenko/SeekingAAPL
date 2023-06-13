@@ -22,16 +22,16 @@ struct Stock: Decodable, Encodable {
   let symbol: StockSymbol
   let high: Double
   let low: Double
-  let open: Double
+  let open: Double?
   let close: Double
   let prevClose: Double
   let last: Double
   let volume: Int
   let lastTime: Date
   let marketCap: Double
-  let extTime: Date
-  let extPrice: Double
-  let extMarket: String
+  let extTime: Date?
+  let extPrice: Double?
+  let extMarket: String?
   let info: String
   let src: String
   let updatedAt: Date
